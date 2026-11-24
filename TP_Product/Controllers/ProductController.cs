@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TP_Product.Models;
@@ -7,6 +8,7 @@ using TP_Product.ViewModels;
 
 namespace TP_Product.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
     public class ProductController : Controller
     {
         readonly IProductRepository ProductRepository;
@@ -20,6 +22,7 @@ namespace TP_Product.Controllers
             this.hostingEnvironment = hostingEnvironment;
         }
         // GET: ProductController
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var products = ProductRepository.GetAll();
